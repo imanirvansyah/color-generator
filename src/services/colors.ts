@@ -3,7 +3,7 @@ export const getColors = async () => {
         const response = await fetch('http://colormind.io/api/', {
             method: 'POST',
             body: JSON.stringify({
-                model: 'default', // You can change model here (e.g., 'ui', 'default')
+                model: 'ui', // You can change model here (e.g., 'ui', 'default')
             }),
         });
         const result = await response.json();
