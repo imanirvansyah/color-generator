@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Plus_Jakarta_Sans } from "next/font/google"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+const jakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  variable: "--jakarta-sans"
+})
 
 export const metadata: Metadata = {
   title: "Color generator project",
@@ -27,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${jakartaSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>

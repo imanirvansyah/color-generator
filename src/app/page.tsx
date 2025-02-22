@@ -1,56 +1,46 @@
 "use client"
-import { Button } from "@/components/atoms/button";
+import { HeroSection } from "@/components/fragments/hero-section";
 import { Navbar } from "@/components/fragments/navbar";
-import { getColors } from "@/services/colors";
-import { useEffect, useState } from "react";
-import { rgbToHex } from "@/helpers/colors";
-
-
+import { useState } from "react";
+import { ResultSection } from "@/components/fragments/result-section";
+export interface IPalette {
+  hex: string, name: string
+}
 
 export default function Home() {
-  const [color, setColor] = useState<string[]>([])
+  const [pallete, setPallete] = useState<IPalette[]>(defaultColor);
 
-  const fetchColor = async () => {
-    const colors = await getColors();
-    setColor([])
-    colors.map((color: number[]) => setColor(prev => [...prev, rgbToHex(color[0], color[1], color[2])]));
-  }
-  const handleClick = () => {
-    fetchColor();
-  }
-  useEffect(() => {
-    fetchColor();
-  }, []);
-
-  if (color.length > 0) {
-    return (
-      <div className="w-screen h-screen" style={{
-        backgroundColor: color[4]
-      }}>
-        <Navbar onClick={handleClick} color={color[0]} />
-        <div className="container mx-auto flex items-center justify-between w-full h-full">
-          <div className="w-1/2">
-            <h1 className="text-6xl font-bold" style={{ color: color[0] }}>COLOR MATCH IS CONFUSING...</h1>
-            <p className="text-lg my-5" style={{ color: color[0] }}>Say no more, just click the button below to get your best color ASAP</p>
-            <Button onClick={handleClick} color={color[2]} />
-          </div>
-          <div className="flex justify-end flex-wrap gap-3 w-1/2">
-            {color.map((color, index) => (
-              <div
-                key={index}
-                style={{
-                  border: "black solid 1px ",
-                  backgroundColor: color,
-                  width: '200px',
-                  height: '200px',
-                }}
-              />
-            ))}
-          </div>
-
-        </div>
+  return (
+    <div className="w-screen h-screen">
+      <Navbar />
+      <div className="flex flex-col md:flex-row items-end p-5 h-full">
+        <HeroSection isShowFullColor={true} pallete={pallete} setPallete={setPallete} />
+        <ResultSection pallete={pallete} />
       </div>
-    );
-  }
-  return null;
+    </div>
+  );
+
 }
+
+const defaultColor = [
+  {
+    hex: "#F95E06",
+    name: "Blaze Orange"
+  },
+  {
+    hex: "#FB7E37",
+    name: "Crusta"
+  },
+  {
+    hex: "#FD9E68",
+    name: "Atomic Tangerine"
+  },
+  {
+    hex: "#FEBE9A",
+    name: "Peach Orange"
+  },
+  {
+    hex: "#FFDFCC",
+    name: "Tuft Bush"
+  }
+]
